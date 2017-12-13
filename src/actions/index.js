@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const ROOT_URL = 'http://reduxblog.herokuapp.com/api'; 
-const API_KEY= ''
+const API_KEY= '?key=kunal1234'
 
 export const FETCH_POSTS = 'FETCH_POSTS';  
 export function fetchPosts() {
