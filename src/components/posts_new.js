@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
-import {Field, reduxForm} from 'redux-form'
+import {Field, reduxForm} from 'redux-form';
+import { connect} from 'react-redux';
+import { createPost } from '../actions/';
+import { Link } from 'react-router-dom';
 
 class PostsNew extends Component {
     
@@ -16,9 +19,16 @@ class PostsNew extends Component {
         )
     }
     
+    onSubmit(values){
+        this.props.createPost(values);
+    }
+
     render() {
+        //handleSubmit is one of the many props that automatically get passed to the component via redux-form helper function
+        const {handleSubmit} = this.props;
+
         return (
-            <form>
+            <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                 <Field
                     label="Title"
                     name="title"
@@ -34,6 +44,8 @@ class PostsNew extends Component {
                     name="content"
                     component={this.renderTitleField}
                 />
+                <button type="submit" className="btn btn-primary">Submit</button>
+                <Link to='/' className="btn btn-default">Cancel</Link>
              </form>
         )
     }
@@ -43,15 +55,15 @@ function validate(values) {
     const errors = {};
 
     if (!values.title) {
-        values.title ="Enter a title"
+        errors.title ="Enter a title"
     };
 
     if (!values.categories) {
-        values.title ="Enter some categories"
+        errors.title ="Enter some categories"
     };
 
     if (!values.content) {
-        values.title ="Enter some content"
+        errors.title ="Enter some content"
     };
 
     return errors;
@@ -60,4 +72,6 @@ function validate(values) {
 export default reduxForm({
     validate,
     form: 'PostsNewForm'
-})(PostsNew);
+})(
+    connect(null, {createPost})(PostsNew)
+);
