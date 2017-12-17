@@ -11,18 +11,24 @@ export function fetchPosts() {
   
     const request = axios.get(`${ROOT_URL}/posts${API_KEY}`)
         .then(function (response) {
-        console.log('promise resolved',response);
         return response
         })
         .catch(function (error) {
-        console.log(error);
         });
-        console.log(request);
         return {
             type: FETCH_POSTS,
             payload: request
         };
-    }
+    };
+
+export function fetchPost(id) {
+    
+    const request = axios.get(`${ROOT_URL}/posts/${id}${API_KEY}`);
+    return {
+            type: FETCH_POST,
+            payload: request
+             }
+}
     
 export function createPost(values, callback) {
     const request = axios.post(`${ROOT_URL}/posts${API_KEY}`, values)
@@ -33,12 +39,3 @@ export function createPost(values, callback) {
         payload: request
     }
 };
-
-export function fetchPost(id) {
-    
-    const request = axios.get(`${ROOT_URL}/posts${id}${API_KEY}`);
-    return {
-            type: FETCH_POST,
-            payload: request
-             }
-}
