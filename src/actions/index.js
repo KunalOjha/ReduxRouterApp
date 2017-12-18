@@ -5,7 +5,8 @@ const API_KEY= '?key=kunal'
 
 export const FETCH_POSTS = 'FETCH_POSTS';  
 export const FETCH_POST = 'FETCH_POST';  
-export const CREATE_POSTS = 'CREATE_POSTS'
+export const CREATE_POSTS = 'CREATE_POSTS';
+export const DELETE_POST = 'DELETE_POST'; 
 
 export function fetchPosts() {
   
@@ -38,4 +39,15 @@ export function createPost(values, callback) {
         type: CREATE_POSTS,
         payload: request
     }
-};
+}
+
+export function deletePost(id, callback) {
+    
+    axios.delete(`${ROOT_URL}/posts/${id}${API_KEY}`)
+        .then(()=>callback());
+     
+    return {
+        type: DELETE_POST,
+        payload: id
+            }
+        }
